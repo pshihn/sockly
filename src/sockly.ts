@@ -16,6 +16,7 @@ interface SocklyMessage extends SocklyMessageBase {
 
 interface SocklyMessageResponse {
   id: string;
+  type: 'R';
   value?: any;
   error?: string;
 }
@@ -26,7 +27,7 @@ export function expose(target: Object | Function, socket: WebSocket): void {
     if (typeof event.data === 'string') {
       const { id, type, value, path = [], args = [] } = JSON.parse(event.data) as SocklyMessage;
       if (id && type) {
-        const response: SocklyMessageResponse = { id };
+        const response: SocklyMessageResponse = { id, type: 'R' };
         const ref = reducePath(path);
         const refParent = reducePath(path.slice(0, -1));
         switch (type) {
@@ -57,6 +58,23 @@ function proxyHandler(socket: WebSocket): ProxyHandler {
   const uid = `${Date.now()}-${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)}`;
   const callbacks = new Map<string, ReqResCallback>();
   let counter = 0;
+
+  socket.addEventListener('message', (event) => {
+    if (typeof event.data === 'string') {
+      const { id, type, value, error } = JSON.parse(event.data) as SocklyMessageResponse;
+      if (id && type === 'R') {
+        const cb = callbacks.get(id);
+        if (cb) {
+          if (error) {
+            cb[1](new Error(error));
+          } else {
+            cb[0](value)
+          }
+        }
+      }
+    }
+  });
+
   return (request) => {
     const id = `${uid}-${++counter}`;
     (request as SocklyMessage).id = id;
