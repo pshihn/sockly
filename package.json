@@ -2,7 +2,10 @@
   "name": "sockly",
   "version": "0.0.1",
   "description": "Easiest way to work with sockets. Expose objects and functions over a socket.",
-  "main": "index.js",
+  "main": "lib/sockly.umd.js",
+  "browser": "lib/sockly.iife.js",
+  "module": "lib/sockly.m.js",
+  "types": "lib/sockly.d.ts",
   "scripts": {
     "build": "tsc && rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
