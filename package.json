@@ -1,6 +1,6 @@
 {
   "name": "sockly",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Easiest way to work with sockets. Expose objects and functions over a socket.",
   "main": "lib/sockly.umd.js",
   "browser": "lib/sockly.iife.js",
