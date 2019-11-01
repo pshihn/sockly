@@ -26,9 +26,8 @@ export type Connectable = WebSocket | RTCDataChannel;
 export function expose(target: Object | Function, connection: Connectable): void {
   const reducePath = (list: string[]) => list.reduce<any>((o: any, prop) => (o ? o[prop] : o), target);
   connection.addEventListener('message', async (event) => {
-    const data = (event as MessageEvent).data;
-    if (typeof data === 'string') {
-      const { id, type, value, path = [], args = [] } = JSON.parse(data) as SocklyMessage;
+    if (typeof (event as MessageEvent).data === 'string') {
+      const { id, type, value, path = [], args = [] } = JSON.parse((event as MessageEvent).data) as SocklyMessage;
       if (id && type) {
         const response: SocklyMessageResponse = { id, type: 'R' };
         const ref = reducePath(path);
@@ -63,9 +62,8 @@ function proxyHandler(connection: Connectable): ProxyHandler {
   let counter = 0;
 
   connection.addEventListener('message', (event) => {
-    const data = (event as MessageEvent).data;
-    if (typeof data === 'string') {
-      const { id, type, value, error } = JSON.parse(data) as SocklyMessageResponse;
+    if (typeof (event as MessageEvent).data === 'string') {
+      const { id, type, value, error } = JSON.parse((event as MessageEvent).data) as SocklyMessageResponse;
       if (id && type === 'R') {
         const cb = callbacks.get(id);
         if (cb) {
