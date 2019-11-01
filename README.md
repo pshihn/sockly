@@ -1,6 +1,6 @@
 # sockly 🧦
 
-Sockly is the easiest way to work with WebSockets or a WebRTC data channel. 
+Sockly is the easiest way to work with an API over WebSockets or a WebRTC data channel. 
 
 Instead of endless message passing, you expose a function or object at one end. At the other end of the connection you simply call the function or use the object properties and mehods. 
 
