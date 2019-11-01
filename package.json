@@ -1,7 +1,7 @@
 {
   "name": "sockly",
   "version": "0.1.0",
-  "description": "Easiest way to work with sockets. Expose objects and functions over a socket.",
+  "description": "Sockly is the easiest way to work with WebSockets or a WebRTC data channel.",
   "main": "lib/sockly.umd.js",
   "browser": "lib/sockly.iife.js",
   "module": "lib/sockly.m.js",
