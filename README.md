@@ -65,5 +65,9 @@ See the live version of the calculator example above:
 
 [Client code](https://glitch.com/edit/#!/sockly-basic-client)
 
+## How does it work
+
+Sockly createa a Proxy when you `link` a connection. This proxy intercept propert gets, sets, and method calls. The proxy does the underlying message passing with the other end of the socket. 
+
 ## License
 [MIT License]https://github.com/pshihn/sockly/blob/master/LICENSE) (c) [Preet Shihn](https://twitter.com/preetster)
