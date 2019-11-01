@@ -72,4 +72,4 @@ See the live version of the calculator example above:
 Sockly creates a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) when you `link` a connection. This proxy intercepts property gets/sets, and method calls. The proxy does the underlying message passing with the other end of the socket. 
 
 ## License
-[MIT License]https://github.com/pshihn/sockly/blob/master/LICENSE) (c) [Preet Shihn](https://twitter.com/preetster)
+[MIT License](https://github.com/pshihn/sockly/blob/master/LICENSE) (c) [Preet Shihn](https://twitter.com/preetster)
