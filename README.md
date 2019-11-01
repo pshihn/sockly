@@ -48,14 +48,14 @@ ES6 import:
 import {link, expose} from 'sockly'
 ```
 
-Or using pika in the browse
+Or using pika in the browser
 ```
 import * as sockly from 'https://cdn.pika.dev/sockly';
 ```
 
 ## Usage
 
-**`expose`** the function of object 
+**`expose`** a function or an object 
 
 and then **`link`** the exposed object at the other end. 
 
@@ -69,7 +69,7 @@ See the live version of the calculator example above:
 
 ## How does it work
 
-Sockly createa a Proxy when you `link` a connection. This proxy intercept propert gets, sets, and method calls. The proxy does the underlying message passing with the other end of the socket. 
+Sockly creates a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) when you `link` a connection. This proxy intercepts property gets/sets, and method calls. The proxy does the underlying message passing with the other end of the socket. 
 
 ## License
 [MIT License]https://github.com/pshihn/sockly/blob/master/LICENSE) (c) [Preet Shihn](https://twitter.com/preetster)
