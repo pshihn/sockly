@@ -1,6 +1,6 @@
 # sockly 🧦
 
-Sockly is the easiest way to communicate over WebSockets or WebRTC data channel. 
+Sockly is the easiest way to work with WebSockets or a WebRTC data channel. 
 
 Instead of endless message passing, you expose a function or object at one end. At the other end of the connection you simply call the function or use the object properties and mehods. 
 
@@ -34,6 +34,8 @@ Any time you use WebSockets or RTCDataChannel for p2p applications on the web (C
 Yes, one could manually add message handling easily, but it gets really annoying to maintain as more API is added over the socket. 
 
 It's just easier to add the new API method and just call it from the client without making any other changes!
+
+*Note: Sockly does not deal with creation/connection/lifecycle of WebSockets or WebRTC channels.*
 
 ## Install
 
