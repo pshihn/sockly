@@ -21,11 +21,14 @@ interface SocklyMessageResponse {
   error?: string;
 }
 
-export function expose(target: Object | Function, socket: WebSocket): void {
+export type Connectable = WebSocket | RTCDataChannel;
+
+export function expose(target: Object | Function, connection: Connectable): void {
   const reducePath = (list: string[]) => list.reduce<any>((o: any, prop) => (o ? o[prop] : o), target);
-  socket.addEventListener('message', async (event) => {
-    if (typeof event.data === 'string') {
-      const { id, type, value, path = [], args = [] } = JSON.parse(event.data) as SocklyMessage;
+  connection.addEventListener('message', async (event) => {
+    const data = (event as MessageEvent).data;
+    if (typeof data === 'string') {
+      const { id, type, value, path = [], args = [] } = JSON.parse(data) as SocklyMessage;
       if (id && type) {
         const response: SocklyMessageResponse = { id, type: 'R' };
         const ref = reducePath(path);
@@ -48,20 +51,21 @@ export function expose(target: Object | Function, socket: WebSocket): void {
             }
             break;
         }
-        socket.send(JSON.stringify(response));
+        connection.send(JSON.stringify(response));
       }
     }
   });
 }
 
-function proxyHandler(socket: WebSocket): ProxyHandler {
+function proxyHandler(connection: Connectable): ProxyHandler {
   const uid = `${Date.now()}-${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)}`;
   const callbacks = new Map<string, ReqResCallback>();
   let counter = 0;
 
-  socket.addEventListener('message', (event) => {
-    if (typeof event.data === 'string') {
-      const { id, type, value, error } = JSON.parse(event.data) as SocklyMessageResponse;
+  connection.addEventListener('message', (event) => {
+    const data = (event as MessageEvent).data;
+    if (typeof data === 'string') {
+      const { id, type, value, error } = JSON.parse(data) as SocklyMessageResponse;
       if (id && type === 'R') {
         const cb = callbacks.get(id);
         if (cb) {
@@ -80,7 +84,7 @@ function proxyHandler(socket: WebSocket): ProxyHandler {
     (request as SocklyMessage).id = id;
     return new Promise((resolve, reject) => {
       callbacks.set(id, [resolve, reject]);
-      socket.send(JSON.stringify(request));
+      connection.send(JSON.stringify(request));
     });
   };
 }
@@ -108,6 +112,6 @@ function proxy<T>(handler: ProxyHandler, path: string[] = []): T {
   return _proxy as any as T;
 }
 
-export function link<T>(socket: WebSocket): T {
-  return proxy(proxyHandler(socket));
+export function link<T>(connection: Connectable): T {
+  return proxy(proxyHandler(connection));
 }
