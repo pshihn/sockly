@@ -1,4 +1,4 @@
-# sockly 🧦
+# 🧦🧦 SOCKLY 🧦🧦
 
 Sockly is the easiest way to work with an API over WebSockets or a WebRTC data channel. 
 
