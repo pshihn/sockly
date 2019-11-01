@@ -1,6 +1,6 @@
 {
   "name": "sockly",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sockly is the easiest way to work with WebSockets or a WebRTC data channel.",
   "main": "lib/sockly.umd.js",
   "browser": "lib/sockly.iife.js",
